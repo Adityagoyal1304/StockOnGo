@@ -1,6 +1,6 @@
 # StockonGo AI Equity Analyst
 
-An autonomous financial research graph powered by LangGraph, Groq, and FastAPI, providing structured investment memos with strict compliance guarantees.
+An autonomous financial research graph powered by LangGraph, Groq and FastAPI that produces structured investment memos and checks every number in a draft against retrieved evidence before a human approves it.
 
 ## THE CRITIC: Internal Fact-Checking
 
@@ -8,21 +8,22 @@ Large Language Models hallucinate. In financial research, an unverified number i
 
 The Writer agent is strictly instructed to list every single number it uses in a `numbers_used` array. The Critic then audits this array against the raw evidence gathered by the worker agents and the deterministic DCF valuation outputs. If a number is derived, hallucinated, or otherwise unverifiable, the Critic rejects the draft and forces the Writer to revise it.
 
-![Critic Catching Hallucinated Number](file:///C:/Users/goyals/.gemini/antigravity-ide/brain/f7ea1f2e-2fa8-4626-a364-75895436e10b/critic_screenshot_1786521584134.png)
+**How the critic is tested** (`backend/test_critic_unit.py`, `backend/test_gate4.py`):
+- The Writer is fed pre-baked evidence with an instruction to invent a number; the Critic must flag it and route the draft back for revision.
+- After 2 revisions the graph stops looping and goes to human approval anyway, so a stubborn disagreement can't burn API credits indefinitely.
+- After the human-approval interrupt, the graph resumes from its checkpoint instead of re-fetching evidence.
 
-In our evaluation set, the Critic successfully rejected **0.0%** of first drafts due to unsupported numbers, forcing a revision that ultimately improved the accuracy of the final memo.
+## Evaluation (smoke test)
 
-## Evaluation Scores
+A small 5-question set (`eval/questions.csv`) across AAPL, MSFT and NVDA, covering a lookup, a computed metric, a retrieval question and a comparison. This is a smoke test, not a benchmark.
 
-We evaluate StockonGo against a benchmark of lookup, computed, retrieval, and comparative financial questions.
-
-| Metric | Score |
+| Metric | Result |
 | --- | --- |
-| Accuracy | **100.0%** |
-| First-Draft Rejection Rate | **0.0%** |
-| Mean Latency | **8.8s** |
+| Correct answers | **5 / 5** |
+| First drafts rejected by the critic | 0 / 5 |
+| Mean latency | **8.8s** (range 2.1s – 16.0s) |
 
-*(Check LangSmith for precise cost-per-run metrics).*
+Per-question results are in `eval/results.csv`. Expanding the question set is on the roadmap.
 
 ## Architecture
 
