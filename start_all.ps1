@@ -1,8 +1,8 @@
-# Start all 3 LetsFin services in separate terminal windows
+# Start all 3 StockonGo services in separate terminal windows
 
 $root = $PSScriptRoot
 
-Write-Host "Starting LetsFin AI Equity Analyst..." -ForegroundColor Cyan
+Write-Host "Starting StockonGo AI Equity Analyst..." -ForegroundColor Cyan
 
 # 1. Backend
 Start-Process wt -ArgumentList "-w 0 new-tab --title `"Backend`" -d `"$root\backend`" powershell -NoExit -Command `".\venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000`"" -ErrorAction SilentlyContinue
@@ -23,4 +23,3 @@ if (-not $?) {
 }
 
 Write-Host "Services started! Open http://localhost:5173 in your browser." -ForegroundColor Green
-

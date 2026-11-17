@@ -18,7 +18,7 @@ from langgraph.types import Command
 
 from graph import build_graph
 
-app = FastAPI(title="Equity Research API", version="0.1.0")
+app = FastAPI(title="StockonGo Equity Research API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,

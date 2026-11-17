@@ -1,10 +1,10 @@
-# LetsFin AI Equity Analyst
+# StockonGo AI Equity Analyst
 
-An autonomous financial research graph powered by LangGraph, Groq (Llama 3.3 70B), and FastAPI, providing structured investment memos with strict compliance guarantees.
+An autonomous financial research graph powered by LangGraph, Groq, and FastAPI, providing structured investment memos with strict compliance guarantees.
 
 ## THE CRITIC: Internal Fact-Checking
 
-Large Language Models hallucinate. In financial research, an unverified number is worse than a missing one. To solve this, LetsFin employs an internal **Critic Agent** that runs before any human sees the draft. 
+Large Language Models hallucinate. In financial research, an unverified number is worse than a missing one. To solve this, StockonGo employs an internal **Critic Agent** that runs before any human sees the draft. 
 
 The Writer agent is strictly instructed to list every single number it uses in a `numbers_used` array. The Critic then audits this array against the raw evidence gathered by the worker agents and the deterministic DCF valuation outputs. If a number is derived, hallucinated, or otherwise unverifiable, the Critic rejects the draft and forces the Writer to revise it.
 
@@ -14,7 +14,7 @@ In our evaluation set, the Critic successfully rejected **0.0%** of first drafts
 
 ## Evaluation Scores
 
-We evaluate LetsFin against a benchmark of lookup, computed, retrieval, and comparative financial questions.
+We evaluate StockonGo against a benchmark of lookup, computed, retrieval, and comparative financial questions.
 
 | Metric | Score |
 | --- | --- |
